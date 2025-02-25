@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Verifier</title>
+    <link rel="icon" href="./resource/media/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="./resource/stylesheet/ui.css">
+</head>
+<body class="bg-gray-50">
+    <div class="h-screen w-full flex flex-col md:flex-row">
+        <!-- Left side - hidden on mobile -->
+        <div class="hidden md:block md:w-1/3 h-screen relative bg-gray-100">
+            <img 
+                src="./resource/media/verifier.jpg" 
+                alt="Background" 
+                class="w-full h-full object-cover object-center"
+            >
+        </div>
+
+        <!-- Right side -->
+        <div class="w-full md:w-2/3 flex items-center justify-center p-4 sm:p-6 md:p-8 lg:p-12 h-screen md:min-h-screen">
+            <div class="w-full max-w-md space-y-6 bg-white rounded-xl shadow-sm p-6 sm:p-8">
+                <div class="flex flex-col items-center space-y-4">
+                    <img 
+                        src="./resource/media/shield.png" 
+                        alt="Shield Icon" 
+                        class="w-12 h-12 sm:w-16 sm:h-16 border-4 border-gray-300 rounded-full bg-white p-2 shadow-lg"
+                    >
+                    <h1 class="text-xl sm:text-2xl font-semibold text-center">Verify your email account</h1>
+                </div>
+
+                <div class="space-y-8">
+                    <div>
+                        <p class="text-sm sm:text-base text-gray-600 mb-4">Enter email to get verification code.</p>
+                        <form class="flex flex-col sm:flex-row gap-3 sm:gap-2" id="emailForm">
+                            <input 
+                                type="email" 
+                                id="email" 
+                                placeholder="eebod@gmail.com" 
+                                required 
+                                autocomplete="on"
+                                class="flex-1 px-3 py-2 bg-white border border-gray-300 rounded-md text-sm shadow-sm placeholder-gray-400
+                                focus:outline-none focus:border-black focus:ring-1 focus:ring-black"
+                            >
+                            <button 
+                                id="sendCodeBtn" 
+                                type="submit"
+                                class="w-full sm:w-28 px-4 py-2 bg-black text-white rounded-md hover:bg-gray-800 
+                                focus:outline-none disabled:opacity-50 active:bg-black disabled:cursor-not-allowed 
+                                transition-colors duration-200"
+                            >
+                                send code
+                            </button>
+                        </form>
+                    </div>
+
+                    <div>
+                        <p class="text-sm sm:text-base text-gray-600 mb-4">Verification code*</p>
+                        <div class="flex flex-wrap justify-center sm:justify-start gap-2 mb-4" id="codeInputs">
+                            <div class="flex items-center">
+                                <input type="text" maxlength="1" class="code-input w-8 h-8 md:w-10 sm:h-10 text-center p-0 border border-gray-300 rounded-md text-sm shadow-sm focus:outline-none focus:border-black focus:ring-1 focus:ring-black">
+                                <span class="pl-2 font-bold text-gray-700">-</span>
+                            </div>
+                            <div class="flex items-center">
+                                <input type="text" maxlength="1" class="code-input w-8 h-8 md:w-10 sm:h-10 text-center p-0 border border-gray-300 rounded-md text-sm shadow-sm focus:outline-none focus:border-black focus:ring-1 focus:ring-black">
+                                <span class="pl-2 font-bold text-gray-700">-</span>
+                            </div>
+                            <div class="flex items-center">
+                                <input type="text" maxlength="1" class="code-input w-8 h-8 md:w-10 sm:h-10 text-center p-0 border border-gray-300 rounded-md text-sm shadow-sm focus:outline-none focus:border-black focus:ring-1 focus:ring-black">
+                                <span class="pl-2 font-bold text-gray-700">-</span>
+                            </div>
+                            <div class="flex items-center">
+                                <input type="text" maxlength="1" class="code-input w-8 h-8 md:w-10 sm:h-10 text-center p-0 border border-gray-300 rounded-md text-sm shadow-sm focus:outline-none focus:border-black focus:ring-1 focus:ring-black">
+                                <span class="pl-2 font-bold text-gray-700">-</span>
+                            </div>
+                            <div class="flex items-center">
+                                <input type="text" maxlength="1" class="code-input w-8 h-8 md:w-10 sm:h-10 text-center p-0 border border-gray-300 rounded-md text-sm shadow-sm focus:outline-none focus:border-black focus:ring-1 focus:ring-black">
+                                <span class="pl-2 font-bold text-gray-700">-</span>
+                            </div>
+                            <div class="flex items-center">
+                                <input type="text" maxlength="1" class="code-input w-8 h-8 md:w-10 sm:h-10 text-center p-0 border border-gray-300 rounded-md text-sm shadow-sm focus:outline-none focus:border-black focus:ring-1 focus:ring-black">
+                            </div>
+                        </div>
+                    </div>
+
+                    <button 
+                        id="submitCodeBtn" 
+                        class="w-full px-4 py-2 bg-black text-white rounded-md hover:bg-gray-800 active:bg-black 
+                        focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
+                        disabled
+                    >
+                        submit code
+                    </button>
+
+                    <div class="text-center text-xs sm:text-sm mt-6 pt-6 border-t border-gray-200">
+                        <span class="text-gray-600">Built for Testing</span>
+                        <span class="px-2 text-gray-400">||</span>
+                        <a href="#" class="text-black hover:underline">Meet-me</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="thankYouModal" class="fixed inset-0 bg-black bg-opacity-50 hidden [&:not(.hidden)]:flex items-center justify-center">
+        <div class="bg-white rounded-xl max-w-md w-full mx-4 transform transition-all">
+            <div class="p-6">
+                <div class="text-center">
+                    <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-green-100 mb-4">
+                        <svg class="h-6 w-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                    </div>
+                    
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">
+                        Thank You!
+                    </h3>
+                    
+                    <div class="mt-2 text-sm text-gray-500">
+                        <p>Thanks for trying out the Verifier application!</p>
+                        <p>It was built as an example of an Auth-completion system.</p>
+                        <p>I hope this provided a useful & realworld auth experience.</p>
+                        <p class="text-xs text-red-400 font-bold mt-4">Your email address & IP info is automatically deleted after 24hrs.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Modal Footer -->
+            <div class="bg-gray-50 px-6 py-4 rounded-b-xl flex flex-col sm:flex-row gap-2 justify-end">
+                <button type="button" id="closeModalBtn"
+                    class="w-full sm:w-auto px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black">
+                    Close
+                </button>
+                <button type="button" id="meetMeBtn"
+                    class="w-full sm:w-auto px-4 py-2 text-sm font-medium text-white bg-black rounded-md hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black">
+                    Meet Me
+                </button>
+            </div>
+        </div>
+    </div>
+    <script src="./resource/script/interact.js"></script>
+</body>
+</html>
