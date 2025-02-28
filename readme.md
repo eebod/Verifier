@@ -1,4 +1,4 @@
-# Project Summary
+# Verifier
 
 ## Backend (BE) Directory
 
@@ -32,4 +32,4 @@ You can also contribute to improving how this works, by sending in a pull reques
 
 ## Reach me
 This was written and developed by me, Ebode.
-You can find more adventurous solutions I have developed in my corner [here](https://ebode.dev).
+You can find other adventurous solutions I have developed in my corner, [here](https://www.ebode.dev).
