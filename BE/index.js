@@ -9,7 +9,7 @@ const sendMail= require('./utils/mailer');
 const DB = require('./utils/db');
 const verifierDB = new DB();
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 6000;
 const  app = express();
 
 const limit = rateLimit({
@@ -22,7 +22,7 @@ const limit = rateLimit({
 })
 
 const corsOptions = {
-    origin: '*',
+    origin: ['e-verifier.web.app', 'www.e-verifier.web.app'],
     optionsSuccessStatus: 200
 }
 
@@ -35,12 +35,7 @@ let dbUp; // DB Connection Monitor
 
 
 app.get('/', async (req,res) =>{
-    try {
-        res.status(200).json({sts: true, msg: 'Health check positive!'})
-    } catch (error) {
-        console.error(error);
-        return res.status(500).json({sts: false, msg: 'An error occured, please try again!'});
-    }
+    res.status(200).json({sts: true, msg: 'Health check positive!'});
 })
 
 app.post('/requestCode', async (req, res) => {
