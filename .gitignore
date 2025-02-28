@@ -1,6 +1,7 @@
 BE/node_modules
-BE/Tailwind/package-lock.json
+BE/package-lock.json
 BE/.env
+BE/Tailwind/package-lock.json
 
 # Dependency directories
 FE/Tailwind/node_modules
