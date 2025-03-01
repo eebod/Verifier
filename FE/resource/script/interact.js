@@ -162,19 +162,15 @@ function displayMessage(message, isSuccess, timer) {
 
 async function reqCode(email){
     try {
-        const myHeaders = new Headers();
-        myHeaders.append("Content-Type", "application/json");
-    
-        const raw = JSON.stringify({ email });
-    
         const requestOptions = {
             method: "POST",
-            headers: myHeaders,
-            body: raw,
-            redirect: "follow"
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ email }),
         };
     
-        const response = await fetch("http://localhost:5000/requestCode", requestOptions);
+        const response = await fetch("https://api.ebode.dev/verifier/requestCode", requestOptions);
         const data = await response.json();
         return data;
     } catch (error) {
@@ -184,20 +180,15 @@ async function reqCode(email){
 
 async function verifyCode({email, code}){
     try {
-        const myHeaders = new Headers();
-        myHeaders.append("Content-Type", "application/json");
-    
-        const raw = JSON.stringify({ email, code });
-  
-    
         const requestOptions = {
             method: "POST",
-            headers: myHeaders,
-            body: raw,
-            redirect: "follow"
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ email, code }),
         };
     
-        const response = await fetch("http://localhost:5000/verifyCode", requestOptions);
+        const response = await fetch("https://api.ebode.dev/verifier/verifyCode", requestOptions);
         const data = await response.json();
         return data;
     } catch (error) {

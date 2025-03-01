@@ -35,7 +35,7 @@ let dbUp; // DB Connection Monitor
 
 
 app.get('/', async (req,res) =>{
-    res.status(200).json({sts: true, msg: 'Health check positive!'});
+    res.status(200).json({sts: true, msg: `Health check positive! | ${dbUp ? 'DB Up!' : 'DB Down!'}`});
 })
 
 app.post('/requestCode', async (req, res) => {
@@ -66,7 +66,7 @@ app.post('/requestCode', async (req, res) => {
 app.post('/verifyCode', async(req, res) => {
 
     try {
-        if(dbUp) return res.status(500).json({ sts: false, msg: 'DB connection down!'});
+        if(!dbUp) return res.status(500).json({ sts: false, msg: 'DB connection down!'});
 
         const { email, code } = req.body;
     
