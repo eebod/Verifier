@@ -22,8 +22,7 @@ To setup the Tailwind environment, all you have to do, is run ```npm install``` 
 
 
 ## Watch me use this project
-<!-- [![Watch me use this project](<img-link>)](<video-url>)  
-Click on Image to Youtube video or use link: <video-url> -->
+Click link to watch Youtube video: https://youtu.be/Vn1l32PtLnc
 
 
 ## Help Improve

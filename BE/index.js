@@ -22,7 +22,7 @@ const limit = rateLimit({
 })
 
 const corsOptions = {
-    origin: ['e-verifier.web.app', 'www.e-verifier.web.app'],
+    origin: ['https://e-verifier.web.app'],
     optionsSuccessStatus: 200
 }
 

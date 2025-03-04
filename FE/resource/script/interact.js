@@ -99,14 +99,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
             if(!response.sts){
                 submitCodeBtn.textContent = 'submit code';
-                return displayMessage(response.msg, false, 5000);
+                return displayMessage(response.msg, false, 3500);
             }
 
-            displayMessage(response.msg, true, 5000);
+            displayMessage(response.msg, true, 3500);
             submitCodeBtn.textContent = 'Verified '
             setTimeout(()=> {
                 submitCodeBtn.textContent = 'submit code'
-            }, 5000);
+            }, 3500);
 
             // Reset form
             emailInput.value = '';
@@ -115,7 +115,9 @@ document.addEventListener('DOMContentLoaded', function() {
             });
             submitCodeBtn.disabled = true;
 
-            showModal();
+            setTimeout(()=>{
+                showModal();
+            }, 4500)
         }
     });
 
