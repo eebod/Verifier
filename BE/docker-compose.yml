@@ -1,0 +1,9 @@
+services:
+  verifier-engine:
+    build:
+      context: .
+    image: verifier
+    container_name: verifier-engine
+    ports:
+      - "6000:6000"
+    restart: always

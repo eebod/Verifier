@@ -7,6 +7,9 @@ BE/Tailwind/package-lock.json
 FE/Tailwind/node_modules
 FE/Tailwind/package-lock.json
 
+# MonogoDB
+Mongo_db/.env
+
 # Logs
 FE/logs
 FE/*.log

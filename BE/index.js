@@ -22,14 +22,14 @@ const limit = rateLimit({
 })
 
 const corsOptions = {
-    origin: ['https://e-verifier.web.app'],
+    origin: ['https://e-verifier.web.app', 'http://localhost:6000', "http://127.0.0.1:6000"],
     optionsSuccessStatus: 200
 }
 
-app.use(limit);
 app.set('trust proxy', true);
 app.use(cors(corsOptions))
 app.use(express.json())
+app.use(limit);
 
 let dbUp; // DB Connection Monitor
 
@@ -80,7 +80,7 @@ app.post('/verifyCode', async(req, res) => {
 
         if (!isTimeValid(userData.time)) return res.status(400).json({sts: false, msg: 'Code expired, get a new code'})
 
-        if(userData.code !== code) return res.status(400).json({sts: false, msg: 'Incorrect code supplied'});
+        if(userData.code !== String(code)) return res.status(400).json({sts: false, msg: 'Invalid code'});
 
         return res.status(200).json({ sts: true, msg: 'Account verified successfully.' });
     } catch (error) {
@@ -119,12 +119,11 @@ function getClientIp(req) {
 
     let ip = req.headers['x-forwarded-for']?.split(',')[0] || // Check for proxy forwarded IP
       req.headers['x-real-ip'] || // Check for nginx real IP header
-      req.connection.remoteAddress || // Direct connection IP
-      req.socket.remoteAddress || // Socket IP
-      req.ip // express Ip
+      req.socket?.remoteAddress || // Socket IP
+      req.ip; // express Ip
 
-    ip = ip.replace(/^::ffff:/, '');
-    if(ip == '::1') return  '127.0.0.1'; // localhost IP reformat to work with ratelimit
+    ip = ip?.replace(/^::ffff:/, '') || '127.0.0.1';
+    if(ip === '::1') return '127.0.0.1'; // localhost IP reformat to work with ratelimit
     return ip;
 }
 
@@ -144,6 +143,11 @@ function retMailOrIp(req){
  * @returns {Promise<Object>} Geolocation data
  */
 async function getGeoData(ip) {
+    // Skip API call for localhost/private IPs
+    if (ip === '127.0.0.1' || ip.startsWith('192.168.') || ip.startsWith('10.') || ip.startsWith('172.')) {
+        return { state: 'Unknown', country: 'Unknown' };
+    }
+
     try {
         let config = {
           method: 'get',
@@ -155,9 +159,10 @@ async function getGeoData(ip) {
         let response = await axios.request(config);
         let data = response.data;
 
-        return { state: data.region, country: countryCode[data.country] }
+        return { state: data.region || 'Unknown', country: countryCode[data.country] || 'Unknown' }
     } catch (error) {
-      throw error
+        console.error('GeoData lookup failed:', error.message);
+        return { state: 'Unknown', country: 'Unknown' };
     }
 }
 
@@ -166,4 +171,17 @@ cron.schedule("0 0 * * *", async() => {
     if(dbUp){
         await verifierDB.removeStaleUsers();
     }
+});
+
+// Graceful shutdown
+process.on('SIGTERM', async () => {
+    console.log('SIGTERM received, shutting down...');
+    await verifierDB.disconnect();
+    process.exit(0);
+});
+
+process.on('SIGINT', async () => {
+    console.log('SIGINT received, shutting down...');
+    await verifierDB.disconnect();
+    process.exit(0);
 });
