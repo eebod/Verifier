@@ -1,7 +1,7 @@
 services:
   mongo:
     image: mongo
-    container_name: mongo_wicked
+    container_name: mongo-wicked
     environment:
       MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
       MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}

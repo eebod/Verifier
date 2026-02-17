@@ -3,7 +3,13 @@ services:
     build:
       context: .
     image: verifier
+    networks:
+      - app-network
     container_name: verifier-engine
     ports:
       - "6000:6000"
     restart: always
+
+networks:
+  app-network:
+    external: true
